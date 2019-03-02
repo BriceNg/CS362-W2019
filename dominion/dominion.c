@@ -711,7 +711,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 //      discardCard(handPos, currentPlayer, state, 0);
 			
 //      return 0;
-		return playCouncil_room (int currentPlayer, struct gameState *state, int handPos, int numPlayers);
+		return playCouncil_room (currentPlayer, state, handPos);
 			
     case feast:
       //gain card with cost up to 5
@@ -840,7 +840,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card from hand
 //      discardCard(handPos, currentPlayer, state, 0);
 //      return 0;
-		return playSmithy (int currentPlayer, struct gameState *state, int handPos)
+		return playSmithy (currentPlayer, state, handPos);
 		
     case village:
       //+1 Card
@@ -852,7 +852,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard played card from hand
 //      discardCard(handPos, currentPlayer, state, 0);
 //      return 0;
-		return playVillage (in currentPlayer, struct gameState *state);
+		return playVillage (currentPlayer, state, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -989,7 +989,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //discard card from hand
 //      discardCard(handPos, currentPlayer, state, 0);
 //      return 0;
-		return playSteward(int currentPlayer, struct gameState *state, int choice1, int choice2, int choice3, int handPos);
+		return playSteward(currentPlayer, state, choice1, choice2, choice3, handPos);
 		
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
@@ -1309,20 +1309,21 @@ int playVillage (int currentPlayer, struct gameState *state, int handPos){
 	drawCard(currentPlayer, state);
 	
 	//bug: Draws a second card
-	drawCard(currentPlayer, state);
+	//drawCard(currentPlayer, state);
 	
 	//Gain 2 actions
+	state->numActions = state->numActions + 2;
 	//bug: only gains one action
-	for(i = 0; i < 1; i++){	
-		state->numActions = state->numActions++;
-	}
+//	for(i = 0; i < 1; i++){	
+		//state->numActions = state->numActions++;
+//	}
 	
 	//discard after playing
 	discardCard(handPos, currentPlayer, state, 0);
 	return 0;
 }
 
-int playCouncil_room (int currentPlayer, struct gameState *state, int handPos, int numPlayers){
+int playCouncil_room (int currentPlayer, struct gameState *state, int handPos){
 
 	//Draw 4 cards and gain 1 buy
 	//Each other player draws a card
@@ -1369,7 +1370,7 @@ int playSteward(int currentPlayer, struct gameState *state, int choice1, int cho
 	}
 	
 	//If choose option 2, get 2 Copper
-	if(choice1 == 2){
+	else if(choice1 == 2){
 		state->coins = state->coins + 2;
 	}
 
