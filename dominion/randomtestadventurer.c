@@ -21,12 +21,6 @@ int main()
 
 	printf("Running Random Adventurer Test\n");
 
-	/*
-									--- Author's Note ---
-	So, I had problems running out of memory when I used the same gameState variable more than 12 times, and
-	I honestly don't know why. I momentarily solved this problem by adding more for loops and creating more gamestates;
-	I was still able to get decent coverage, though not up to the amount of tests I originally had in mind.
-	*/
 	players = 0;
 	for (i = 0; i < MAX_TESTS; i++)
 	{
@@ -73,7 +67,7 @@ int main()
 			deckCount = stat.deckCount[player];
 		}
 
-		//1 in 3 chance of making empty deck for coverage
+		//Make empty deck to boost coverage
 		if (seed % 3 == 0)
 		{
 			stat.deckCount[player] = 0;
@@ -101,7 +95,7 @@ int main()
 			deckCount = sta.deckCount[player];
 		}
 
-		//1 in 3 chance of making empty deck for coverage
+		//Make empty deck to boost coverage
 		if (seed % 3 == 0)
 		{
 			sta.deckCount[player] = 0;

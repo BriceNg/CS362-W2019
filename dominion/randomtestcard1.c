@@ -37,63 +37,62 @@ int main() {
    
    printf("Running Random Smithy Test\n");
    
-    for(i = 0; i < 1000000; i++){
-        initializeGame(numPlayers, k, seed, &G);
+    for(i = 0; i < 1000000; i++)
+	{
+		initializeGame(numPlayers, k, seed, &G);
         deckSize = rand() % (MAX_DECK + 1);
-	//set handsize
         handSize = rand() % (deckSize + 1);
-      
-        
+		
         G.deckCount[0] = deckSize - handSize;
         G.handCount[0] = handSize;
-        
+		
         handPos = G.hand[currentPlayer][G.handCount[currentPlayer] - 1];
-        //personal checks
-        deckBefore = G.deckCount[0];
-        //printf("deck before %d\n", deckBefore);
-        handBefore = G.handCount[0];
-        //printf("Hand before %d\n",handBefore);
-        discardBefore = G.playedCardCount;
-        //printf("Discard before %d\n", discardBefore);
+		
+		deckBefore = G.deckCount[0];
+		handBefore = G.handCount[0];
+		discardBefore = G.playedCardCount;
+		
+		//Test Smithy
+		playSmithy(currentPlayer, &G, handPos);
         
+		deckAfter = G.deckCount[0];
+		handAfter = G.handCount[0];
+		discardAfter = G.playedCardCount;
         
-        playSmithy(currentPlayer, &G, handPos);
-        
-        deckAfter = G.deckCount[0];
-        handAfter = G.handCount[0];
-        discardAfter = G.playedCardCount;
-        
-        passed = 1;
-        
-        if(handAfter != (handBefore + 2)){
-            printf("Smithy test failed: Didn't draw correctly\n");
-            handFailure++;
-            passed = 0;
-        }
-        
-        if(deckAfter != (deckBefore - 3)){
-            printf("Smithy test failed: Didn't remove from deck\n");
-            deckFailure++;
-            passed = 0;
-        }
-        
-        if(discardAfter != (discardBefore + 1)){
-            printf("Smithy test failed: Didn't discard\n");
-            discardFailure++;
-            passed = 0;
-        }
-        
-        if(passed == 1){
-            printf("Smithy tests passed.\n");
-            testPassed++;
-        }
-        
-    }
-        
-   printf("\n\n");
-   printf("# of Tests Passed: %d\n", testPassed);
-   printf("# of Cards Drawn To Hand Failed: %d\n", handFailure);
-   printf("# of Smithy Discarded Fails: %d\n\n", discardFailure);        
-   
-   return 0;
+		passed = 1;
+
+		if(handAfter != (handBefore + 2))
+		{
+			printf("Smithy test failed: Didn't draw correctly\n");
+			handFailure++;
+			passed = 0;
+		}
+
+		if(deckAfter != (deckBefore - 3))
+		{
+			printf("Smithy test failed: Didn't remove from deck\n");
+			deckFailure++;
+			passed = 0;
+		}
+
+		if(discardAfter != (discardBefore + 1))
+		{
+			printf("Smithy test failed: Didn't discard\n");
+			discardFailure++;
+			passed = 0;
+		}
+
+		if(passed == 1)
+		{
+			printf("Smithy tests passed.\n");
+			testPassed++;
+		}
+	}
+	
+	printf("\n\n");
+	printf("# of Tests Passed: %d\n", testPassed);
+	printf("# of Cards Drawn To Hand Failed: %d\n", handFailure);
+	printf("# of Smithy Discarded Fails: %d\n\n", discardFailure);        
+	
+	return 0;
 }
