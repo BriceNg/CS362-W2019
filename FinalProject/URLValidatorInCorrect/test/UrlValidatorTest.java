@@ -57,7 +57,6 @@ public class UrlValidatorTest extends TestCase {
 		//new StringBool("www.facebook.comwww.facebook.com", true),				//failure: expected T but was F
 		new StringBool("a", false)
 	};
-	String partitionTestURL1 = new String("http://www.facebook.com/fb?a=c&b=dm");
 
    public UrlValidatorTest(String testName) {
       super(testName);
